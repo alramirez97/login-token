@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../models/user';
+import { JwtResponse } from '../models/jwt-response';
 import { LoginService } from '../services/login.service';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.sass']
+  styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
 
-  user: User = {
+  jwtoken: JwtResponse = {
     username: '',
     email:'',
     password: '',
-    token: ''
+    token: '',
+    expira: ''
   }
   
   constructor(
@@ -25,7 +26,7 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
   }
   signIn() {
-    this.authService.signInUser(this.user)
+    this.authService.signInUser(this.jwtoken)
       .subscribe(
         res => {
           console.log(res);

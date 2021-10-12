@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {HttpClient, HttpHeaders} from '@angular/common/http'
+import { JwtResponse } from '../models/jwt-response';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
 
 
-const httpOptions = {
-  headers: new HttpHeaders({ 
-    'Access-Control-Allow-Origin':'*',
-    'Authorization':'token',
-    'userid':'1'
-  })
-};
 @Injectable({
   providedIn: 'root'
 })
@@ -25,12 +19,12 @@ export class LoginService {
   ) { }
   
 
-  signUpUser(user: User): Observable<User> {
-    return this.http.post<User>(this.URL + '/signup', user);
+  signInUser(jwtoken: JwtResponse): Observable<JwtResponse> {
+    return this.http.post<JwtResponse>(this.URL + '/signin', jwtoken);
   }
 
-  signInUser(user: User): Observable<User> {
-    return this.http.post<User>(this.URL + '/signin', user);
+  signUpUser(user: User): Observable<User> {
+    return this.http.post<User>(this.URL + '/signup', user);
   }
 
   loggedIn() {

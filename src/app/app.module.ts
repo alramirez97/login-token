@@ -8,6 +8,11 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './login/auth/auth.component';
 import { RegisterComponent } from './login/register/register.component';
 import { DashboardComponent } from './principal/dashboard/dashboard.component';
+import { TokenInterceptorService } from './login/services/token-interceptor.service';
+import { MenuComponent } from './principal/menu/menu.component';
+import { FooterComponent } from './principal/footer/footer.component';
+import { LoginGuard } from './login.guard';
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +20,9 @@ import { DashboardComponent } from './principal/dashboard/dashboard.component';
     AuthComponent,
     RegisterComponent,
     DashboardComponent,
+    MenuComponent,
+    FooterComponent,
+    UsersComponent,
     
   ],
   imports: [
@@ -23,7 +31,14 @@ import { DashboardComponent } from './principal/dashboard/dashboard.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    LoginGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
